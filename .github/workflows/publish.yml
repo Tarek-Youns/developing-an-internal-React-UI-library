@@ -34,7 +34,7 @@ jobs:
         os: [ubuntu-latest] 
 
     runs-on: ${{ matrix.os }}
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/Feature' }}
     needs: [quality]
     steps: 
     - uses: actions/checkout@v2
