@@ -38,8 +38,8 @@ jobs:
           # a cache from a previous state that doesn't match exactly with the 'key'. They are checked sequentially until a cache hit is found.
           # A list of restore-keys is useful when you are restoring a cache from another branch because restore-keys can partially match cache keys.
         restore-keys: |
-          ${{ runner.os }}-node-
-          ${{ runner.os }}-
+         ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          
 
     - name: Install dependencies if cache miss
       if: steps.cache.outputs.cache-hit != 'true'
@@ -51,7 +51,7 @@ jobs:
       with:
         path: ./node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        
+
     - name: test  
       run: npm test
   
