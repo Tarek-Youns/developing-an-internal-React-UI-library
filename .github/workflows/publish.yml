@@ -34,7 +34,13 @@ jobs:
         os: [ubuntu-latest] 
 
     runs-on: ${{ matrix.os }}
-    
+    if: ${{ github.ref == 'refs/heads/main' }} 
+    permissions:  
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+     
     needs: [quality]
     steps: 
     - uses: actions/checkout@v2
