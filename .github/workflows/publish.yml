@@ -102,11 +102,13 @@ jobs:
       uses: JS-DevTools/npm-publish@v3
       with:
           token: ${{ secrets.NPM_TOKEN }}
-    - name: push to github 
-      uses: JS-DevTools/npm-publish@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        registry: "https://npm.pkg.github.com"
+          registry: "https://registry.npmjs.org/"
+          
+    # - name: push to github 
+    #   uses: JS-DevTools/npm-publish@v3
+    #   with:
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     registry: "https://npm.pkg.github.com"
        
 
 
