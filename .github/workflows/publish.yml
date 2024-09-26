@@ -76,6 +76,25 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Attempt to restore the cache
+      uses: actions/cache@v3
+      id: cache
+      with:
+        path: ./node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} 
+    
+    - name: Install dependencies if cache miss
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: npm ci
+
+    - name: Save the cache after installing dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      uses: actions/cache@v3
+      with:
+        path: ./node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}   
     - name: install dependences    
       run: npm ci
       env: 
