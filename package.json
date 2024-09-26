@@ -38,16 +38,16 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "your-package-name-you-want-to-see-on-npm-lol",
-  "author": "Hellooooooo",
-  "module": "dist/your-package-name-you-want-to-see-on-npm-lol.esm.js",
+  "name": "@tarek_youns/package",
+  "author": "tarek",
+  "module": "dist/@tarek_youns/package.esm.js",
   "size-limit": [
     {
-      "path": "dist/your-package-name-you-want-to-see-on-npm-lol.cjs.production.min.js",
+      "path": "dist/@tarek_youns/package.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/your-package-name-you-want-to-see-on-npm-lol.esm.js",
+      "path": "dist/@tarek_youns/package.esm.js",
       "limit": "10 KB"
     }
   ],
