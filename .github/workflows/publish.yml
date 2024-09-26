@@ -99,10 +99,15 @@ jobs:
       run: npm ci 
 
     - name: Semantic Release
-      uses: cycjimmy/semantic-release-action@v4
-      env: 
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      uses: JS-DevTools/npm-publish@v3
+      with:
+          token: ${{ secrets.NPM_TOKEN }}
+    - name: push to github 
+      uses: JS-DevTools/npm-publish@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        registry: "https://npm.pkg.github.com"
+       
 
 
       
