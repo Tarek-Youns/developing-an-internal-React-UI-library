@@ -96,12 +96,13 @@ jobs:
         path: ./node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}   
     - name: install dependences    
-      run: npm ci
+      run: npm ci 
+
+    - name: Semantic Release
+      uses: cycjimmy/semantic-release-action@v4
       env: 
-        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
-    - name: push    
-      run: npm run semantic-release
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
       
