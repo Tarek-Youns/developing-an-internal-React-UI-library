@@ -3,7 +3,9 @@ pipeline {
 
     environment {
         NODE_VERSION = '18.6.0'
-       // NPM_TOKEN = credentials('NPM_TOKEN') // Assumes you're using Jenkins Credentials for the NPM Token 
+        NEXUS_TOKEN = credentials('NEXUS_TOKEN') 
+        NEXUS_REPO = "http://localhost:8081/repository/npm-nexus-repo/" 
+
     }
 
     options {
@@ -57,22 +59,23 @@ pipeline {
             }
         }
 
-        // stage('Publish') {
-        //     when {
-        //         branch 'main'
-        //     }
-        //     steps {
-        //         script {
-        //             withEnv(["NPM_TOKEN=${NPM_TOKEN}"]) {
-        //                 // Publish to npm
-        //                 sh '''
-        //                 npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-        //                 npm publish --access public
-        //                 '''
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Publish') {
+            when {
+                branch 'main'
+            }
+            steps {
+                script {
+                    withEnv(["NEXUS_TOKEN=${NEXUS_TOKEN}", "NEXUS_REPO=${NEXUS_REPO}"]) {
+                        
+                        sh '''
+                        npm set //$NEXUS_REPO/:_authToken=$NEXUS_TOKEN 
+                        npm publish --registry=$NEXUS_REPO
+
+                        '''
+                    }
+                }
+            }
+        }
     }
     
 
