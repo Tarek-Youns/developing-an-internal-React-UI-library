@@ -57,23 +57,23 @@ pipeline {
             }
         }
 
-    //     stage('Publish') {
-    //         when {
-    //             branch 'main'
-    //         }
-    //         steps {
-    //             script {
-    //                 withEnv(["NPM_TOKEN=${NPM_TOKEN}"]) {
-    //                     // Publish to npm
-    //                     sh '''
-    //                     npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-    //                     npm publish --access public
-    //                     '''
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+        // stage('Publish') {
+        //     when {
+        //         branch 'main'
+        //     }
+        //     steps {
+        //         script {
+        //             withEnv(["NPM_TOKEN=${NPM_TOKEN}"]) {
+        //                 // Publish to npm
+        //                 sh '''
+        //                 npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+        //                 npm publish --access public
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
+    }
     
 
     post {
