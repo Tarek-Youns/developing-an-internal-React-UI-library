@@ -1,0 +1,34 @@
+---
+# vars file for install
+Dirctory_app: "/app"
+downloaded_file: "/app/nexus.tar.gz" 
+Archive: "/app/nexus/*.tar.gz "
+Old_name: "/app/nexus-3*"
+New_Name: "/app/nexus"
+configration_path: "/etc/systemd/system/nexus.service"
+
+
+# Nexus configration file
+Service_file: | 
+
+ [Unit]
+ Description=nexus service
+ After=network.target
+
+ [Service]
+ Type=forking
+ LimitNOFILE=65536
+ User=nexus
+ Group=nexus
+ ExecStart=/app/nexus/bin/nexus start
+ ExecStop=/app/nexus/bin/nexus stop
+ Restart=on-abort 
+
+ [Install]
+ WantedBy=multi-user.target 
+ 
+
+
+
+
+

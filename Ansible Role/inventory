@@ -1,0 +1,3 @@
+
+[hosts]
+host_1 ansible_host=192.168.232.4 ansible_user=tarek

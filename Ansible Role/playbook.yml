@@ -1,0 +1,13 @@
+---
+
+- name: install Nexus
+
+  hosts: all 
+  remote_user: tarek
+  become: true
+
+  roles:
+       - install
+
+  
+

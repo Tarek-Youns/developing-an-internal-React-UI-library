@@ -1,0 +1,109 @@
+---
+# tasks file for install
+#  Login to your Linux server and update the yum packages. Also install required utilities.
+- name: Install wget
+  ansible.builtin.yum:
+    update_cache: true
+    name: wget
+    state: present
+
+
+# check if  Java installed or not
+- name: fetch java version
+  shell: java -version
+  changed_when: False
+  register: java_result
+  failed_when: False
+  
+  
+
+
+# install java
+- name: install java version
+  yum:
+    name: java-1.8.0-openjdk
+    state: latest       
+  when: java_result.rc!=0
+
+
+# make dirctory
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: "{{Dirctory_app}}"
+    state: directory
+    mode: '0755'
+  
+
+# Download the latest nexus
+- name: install nexus
+  ansible.builtin.get_url:
+    url: https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+    dest: "{{Downloaded_file}}"
+ 
+
+# Untar the downloaded file
+- name: Unarchive a file that is already on the remote machine
+  ansible.builtin.unarchive:
+    src: "{{Downloaded_file}}"
+    dest: "{{Dirctory_app}}"
+    remote_src: yes
+
+# remove tar files
+- name: Recursively remove directory
+  ansible.builtin.file:
+    path: "{{Archive}}"
+    state: absent
+
+# Rename the untared file to nexus.
+- name: Rename the untared file to nexus
+  become: true
+  shell: mv "{{Old_name}}"  "{{New_Name}}"
+  args:
+    executable: /bin/bash
+
+
+
+#  As a good security practice, it is not advised to run nexus service with root privileges. So create a new user named nexus to run the nexus service.
+- name: Add the user 'nexus' with a specific uid and a primary group of 'nexus'
+  ansible.builtin.user:
+    name: nexus
+    
+
+
+# Change the ownership of nexus files and nexus data directory to nexus user
+- name: Change file ownership, group and permissions
+  ansible.builtin.file:
+    path: "{{Dirctory_app}}"
+    recurse: true
+    owner: nexus
+    group: nexus
+    mode: '0755'
+    state: directory
+
+
+# edit in config file
+- name: edit
+  shell: sed -i 's/#run_as_user=*/run_as_user="nexus"/g' /app/nexus/bin/nexus.rc
+
+
+# Running Nexus as a System Service
+- name: Touch service file
+  ansible.builtin.file:
+    path: "{{configration_path}}"
+    state: touch
+    mode: u+rw,g-wx,o-rwx
+
+# edit in config file
+- name: edit
+  shell: echo "{{service_file}}" > "{{configration_path}}"
+
+
+
+
+# To start the Nexus service
+- name: Start service Nexus, if not started
+  ansible.builtin.service:
+    name: nexus
+    state: started
+    enabled: yes
+
