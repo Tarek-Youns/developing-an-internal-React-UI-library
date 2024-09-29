@@ -18,40 +18,19 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Tarek-Youns/developing-an-internal-React-UI-library.git' 
             }
         }
-
-        stage('Restore Cache') {
+        stage("npm packages handling") {
             steps {
-                script {
-                    try {
-                        // Try to restore the cached node_modules
-                        unstash 'node_modules_cache'
-                    } catch (Exception e) {
-                        echo "Cache miss, installing dependencies..."
-                    }
+                cache(caches: [
+                    arbitraryFileCache(
+                        path: "node_modules",
+                        includes: "**/*",
+                        cacheValidityDecidingFile: "package-lock.json"
+                    )
+                ]) {
+                    sh "npm install" 
                 }
             }
         }
-
-        stage('Install Dependencies') {
-            steps {
-                // Install dependencies if not cached
-                script {
-                    if (!fileExists('node_modules')) {
-                        sh 'npm ci'
-                    }
-                }
-            }
-        }
-
-        stage('Save Cache') {
-            steps {
-                // Save the node_modules to cache
-                script {
-                    stash includes: 'node_modules/**', name: 'node_modules_cache'
-                }
-            }
-        }
-
         stage('Test') {
             steps {
                 // Run tests
