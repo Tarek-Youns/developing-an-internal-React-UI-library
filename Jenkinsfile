@@ -18,25 +18,14 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Tarek-Youns/developing-an-internal-React-UI-library.git' 
             }
         }
-
-        stage("npm packages handling") {
+        stage("npm install") {
             steps {
-                cache(caches: [
-                    arbitraryFileCache(
-                        path: "node_modules",
-                        includes: "**/*",
-                        cacheValidityDecidingFile: "package-lock.json"
-                    )
-                ]
-                )
-                 {
-                    sh "npm ci"  
-                }
+              sh npm ci
             }
         }
         stage('Test') {
             steps {
-                // Run tests
+                
                 sh 'npm test'
             }
         }
