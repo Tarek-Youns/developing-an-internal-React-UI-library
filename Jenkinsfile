@@ -18,6 +18,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Tarek-Youns/developing-an-internal-React-UI-library.git' 
             }
         }
+
         stage("npm packages handling") {
             steps {
                 cache(caches: [
@@ -26,8 +27,10 @@ pipeline {
                         includes: "**/*",
                         cacheValidityDecidingFile: "package-lock.json"
                     )
-                ]) {
-                    sh "npm install" 
+                ]
+                )
+                 {
+                    sh "npm ci"  
                 }
             }
         }
