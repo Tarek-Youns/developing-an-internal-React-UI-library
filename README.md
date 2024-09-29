@@ -32,7 +32,26 @@ git clone https://github.com/Tarek-Youns/developing-an-internal-React-UI-library
 when you push this code to your repo the workflow will be triggered(if you have a public ip and used webhook) or you can run it manually
 
 ### Usage
+Follow these steps to use the CI/CD pipeline:
 
+1-Configure Jenkins: Set up Jenkins with the required plugins and configurations.
+2-Configure Nexus Repository: Set up Nexus Repository Manager and configure the repository, Before that you can use the ansible role it this repo 
+Frist configur your play book like that 
+```
+- hosts: servers #your hosts
+  remote_user: tarek  # choice user to run the commands in the remote machine 
+  become: true  # to give sudo to the user 
+  roles:
+     - install   #role name 
+```
+second run this command 
+```
+ansible-playbook playbook.yml -i inventory --ask-become-pass
+```
+3-Set Jenkins Credentials: Add credentials for GitHub, Nexus Repository, and SonarQube to Jenkins.
+4-Create Jenkins Pipeline: Create a new pipeline in Jenkins and paste the provided Jenkinsfile.
+Set up Webhook: In your GitHub repository settings, navigate to "Webhooks" and add a new webhook pointing to your Jenkins server's URL. Configure the webhook to trigger on code push events. Ensure that the Jenkins GitHub plugin is installed and configured to receive webhook notifications(in case you have public ip, if you have not one trigger it manually)
+Run Pipeline: Trigger the pipeline manually or set up a webhook for automatic triggering on code changes.
 
 
 ### Contact
