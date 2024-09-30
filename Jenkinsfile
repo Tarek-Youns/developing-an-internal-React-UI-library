@@ -54,7 +54,7 @@ pipeline {
         stage('integration test') {
 
             steps {
-                npm install @tarek_youns/package@0.1.2-development 
+                sh 'npm install @tarek_youns/package@0.1.2-development'  
 
             }
         }
