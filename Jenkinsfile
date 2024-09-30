@@ -4,8 +4,7 @@ pipeline {
     environment {
         NODE_VERSION = '18.6.0'
         NEXUS_TOKEN = credentials('NEXUS_TOKEN') 
-        NEXUS_REPO = "http://localhost:8081/repository/npm-nexus-repo/" 
-
+        NEXUS_REPO = "http://192.168.1.5:8081/repository/npm-nexus-repo/"
     }
 
     options {
@@ -39,10 +38,10 @@ pipeline {
                     withEnv(["NEXUS_TOKEN=${NEXUS_TOKEN}", "NEXUS_REPO=${NEXUS_REPO}"]) {
                         
                         sh '''
-                        npm set //$NEXUS_REPO/:_authToken=$NEXUS_TOKEN 
+                        npm config set  $NEXUS_TOKEN 
                         
-                        npm publish --registry=$NEXUS_REPO
-                        
+                        npm publish   --registry=$NEXUS_REPO 
+
 
                         '''
                     }

@@ -82,9 +82,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "publishConfig": {
-    "registry": "http://localhost:8081/repository/npm-nexus-repo/" 
-
   }
+  
 }
