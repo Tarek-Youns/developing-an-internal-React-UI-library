@@ -40,7 +40,9 @@ pipeline {
                         
                         sh '''
                         npm set //$NEXUS_REPO/:_authToken=$NEXUS_TOKEN 
+                        
                         npm publish --registry=$NEXUS_REPO
+                        
 
                         '''
                     }
