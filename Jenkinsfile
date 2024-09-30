@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        NODE_VERSION = '18.6.0'
         NEXUS_TOKEN = credentials('NEXUS_TOKEN') 
         NEXUS_REPO = "http://192.168.1.5:8081/repository/npm-nexus-repo/"
     }
@@ -17,6 +16,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Tarek-Youns/developing-an-internal-React-UI-library.git' 
             }
         }
+
         stage("npm install") {
             steps {
               sh 'npm ci'
@@ -30,9 +30,7 @@ pipeline {
         }
 
         stage('Publish') {
-            // when {
-            //     branch 'main'
-            // }
+            
             steps {
                 script {
                     withEnv(["NEXUS_TOKEN=${NEXUS_TOKEN}", "NEXUS_REPO=${NEXUS_REPO}"]) {
