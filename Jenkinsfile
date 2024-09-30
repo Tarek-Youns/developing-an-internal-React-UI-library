@@ -38,7 +38,7 @@ pipeline {
                     withEnv(["NEXUS_TOKEN=${NEXUS_TOKEN}", "NEXUS_REPO=${NEXUS_REPO}"]) {
                         
                         sh '''
-                        echo "//192.168.1.5:8081/repository/npm-nexus-repo/:_authToken=NpmToken.1a3c57d6-7595-3d94-9d31-f7d6b928b269" > .npmrc
+                        echo $NEXUS_TOKEN > .npmrc
                         
 
                         
@@ -49,13 +49,21 @@ pipeline {
                     }
                 }
             }
+
+        }
+        stage('integration test') {
+
+            steps {
+                npm install @tarek_youns/package@0.1.2-development 
+
+            }
         }
     }
     
 
     post {
         always {
-            // Clean up workspace after build
+           
             cleanWs()
         }
     }
