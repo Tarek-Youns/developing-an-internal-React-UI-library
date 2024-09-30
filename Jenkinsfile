@@ -38,7 +38,8 @@ pipeline {
                     withEnv(["NEXUS_TOKEN=${NEXUS_TOKEN}", "NEXUS_REPO=${NEXUS_REPO}"]) {
                         
                         sh '''
-                        npm config set  $NEXUS_TOKEN 
+                        npm config set //nexus.example.com/repository/npm/:_authToken $NEXUS_TOKEN
+
                         
                         npm publish   --registry=$NEXUS_REPO 
 
