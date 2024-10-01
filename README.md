@@ -43,13 +43,13 @@ Frist configur your play book like that
   remote_user: tarek  # choice user to run the commands in the remote machine 
   become: true  # to give sudo to the user 
   roles:
-     - install   #role name 
+     - install   <role name>
 ```
 second run this command 
 ```
 ansible-playbook playbook.yml -i inventory --ask-become-pass
 ```
-3-Set Jenkins Credentials: Add credentials for GitHub, Nexus Repository, and SonarQube to Jenkins.
+3-Set Jenkins Credentials: Add credentials for GitHub and Nexus Repository to Jenkins.
 
 4-Create Jenkins Pipeline: Create a new pipeline in Jenkins and paste the provided Jenkinsfile.
 Set up Webhook: In your GitHub repository settings, navigate to "Webhooks" and add a new webhook pointing to your Jenkins server's URL. Configure the webhook to trigger on code push events. Ensure that the Jenkins GitHub plugin is installed and configured to receive webhook notifications(in case you have public ip, if you have not one trigger it manually)
